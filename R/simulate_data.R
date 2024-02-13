@@ -1,3 +1,6 @@
+library(tidyr)
+library(ggplot2)
+
 # Create environment to keep tracks of internal state
 the <- new.env(parent = emptyenv())
 
@@ -165,4 +168,13 @@ simulate_dataset <- function(model_type, seed = 1234) {
         )
 
     return(fake_data)
+}
+
+
+hist_sim <- function(d) {
+    d |>
+       pivot_longer(colnames(d)) |>
+        ggplot(aes(x = value)) +
+            geom_histogram() +
+            facet_wrap(~ name, scales = "free")
 }
