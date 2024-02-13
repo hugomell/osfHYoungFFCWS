@@ -76,3 +76,63 @@ set_params_simu <- function(x, model_type) {
     the[[params_name]] <- x
     invisible(old)
 }
+
+
+#' Generate the model formula for the given model type
+gen_model_formula <- function(model_type) {
+    params_name <- glue::glue("params_simu_{model_type}")
+    params <- the[[params_name]]
+
+    # lavaan syntax for baseline model
+    if (model_type == "baseline") {
+        formula <- glue::glue(
+            "std ~ {params[1]} * SES + {params[2]} * threat\\
+            + {params[3]} * deprivation
+            ",
+            "internalizing ~ {params[4]} * std + {params[5]} * SES\\
+            + {params[6]} * threat + {params[7]} * deprivation
+            ",
+            "externalizing ~ {params[8]} * std + {params[9]} * SES\\
+            + {params[10]} * threat + {params[11]} * deprivation
+            "
+        )
+    # lavaan syntax for mediation model
+    } else if (model_type == "mediation") {
+        formula <- glue::glue(
+            "std ~ {params[1]} * SES + {params[2]} * threat\\
+            + {params[3]} * deprivation
+            ",
+            "repro ~ {params[4]} * std + {params[5]} * SES\\
+            + {params[6]} * threat + {params[7]} * deprivation
+            ",
+            "internalizing ~ {params[8]} * std + {params[9]} * repro\\
+             + {params[10]} * SES + {params[11]} * threat\\
+             + {params[12]} * deprivation
+            ",
+            "externalizing ~ {params[13]} * std + {params[14]} * repro\\
+             + {params[15]} * SES + {params[16]} * threat\\
+             + {params[17]} * deprivation
+            "
+        )
+    # lavaan syntax for moderation model
+    } else {
+        formula <- glue::glue(
+            "std ~ {params[1]} * SES + {params[2]} * threat\\
+            + {params[3]} * deprivation
+            ",
+            "repro ~ {params[4]} * SES + {params[5]} * threat\\
+            + {params[6]} * deprivation
+            ",
+            "internalizing ~ {params[7]} * std + {params[8]} * repro\\
+             + {params[9]} * prod_std_repro + {params[10]} * SES\\
+             + {params[11]} * threat + {params[12]} * deprivation
+            ",
+            "externalizing ~ {params[13]} * std + {params[14]} * repro\\
+             + {params[15]} * prod_std_repro + {params[16]} * SES\\
+             + {params[17]} * threat + {params[18]} * deprivation
+            "
+        )
+    }
+
+    return(formula)
+}
