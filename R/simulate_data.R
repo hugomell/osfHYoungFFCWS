@@ -168,6 +168,8 @@ simulate_dataset <- function(model_type, seed = 1234) {
 }
 
 
+#' Generate histograms for each variable in simulated dataset
+#' @export
 hist_sim <- function(d) {
     d |>
        tidyr::pivot_longer(colnames(d)) |>
