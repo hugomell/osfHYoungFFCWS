@@ -1,5 +1,5 @@
-.Rproj.user
 .Rhistory
-.RData
-.DS_Store
+.Rdata
 .httr-oauth
+.DS_Store
+.quarto
