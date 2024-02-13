@@ -67,3 +67,19 @@ fit_moderation <- function(d) {
 
     return(out)
 }
+
+
+#' Check parameter recovery
+#' @export
+check_params_recovery <- function(m, model_type) {
+    params <- get_params_simu(model_type)
+
+    coeffs <- tibble::as_tibble(brms::fixef(m), rownames = "parameter")
+    coeffs |>
+        dplyr::filter(!(parameter %in% c("std_Intercept",
+            "repro_Intercept", "internalizing_Intercept",
+            "externalizing_Intercept"))
+        ) |>
+        dplyr::select(1:2) |>
+        dplyr::mutate(brms = params)
+}
