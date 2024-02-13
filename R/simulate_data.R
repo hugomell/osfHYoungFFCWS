@@ -136,3 +136,33 @@ gen_model_formula <- function(model_type) {
 
     return(formula)
 }
+
+
+#' Simulate data for a given model
+#' @export
+simulate_dataset <- function(model_type, seed = 1234) {
+    set.seed(seed)
+
+    if (model_type == "baseline") {
+        formula <- gen_model_formula("baseline")
+        skewness <- c(0, 0.9, 0.9, 0.8, 0.5, 0.2)
+        kurtosis <- c(0, 0.5, 0.6,   0, 0.2, 0)
+    } else if (model_type == "mediation") {
+        formula <- gen_model_formula("mediation")
+        skewness <- c(0, 0.7, 0.9, 0.9, 0.8, 0.5, 0.2)
+        kurtosis <- c(0, 0.2, 0.5, 0.6,   0, 0.2, 0)
+    } else {
+        formula <- gen_model_formula("moderation")
+        skewness <- c(0, 0.7, 0.9, 0.9, 0.8, 0.5, 0.2, 0)
+        kurtosis <- c(0, 0.2, 0.5, 0.6,   0, 0.2,   0, 0)
+    }
+
+    fake_data <- lavaan::simulateData(
+        model = formula, model.type = "sem", int.ov.free = TRUE,
+        auto.var = TRUE, auto.cov.y = TRUE, sample.nobs = 2000L,
+        skewness = skewness,
+        kurtosis = kurtosis
+        )
+
+    return(fake_data)
+}
