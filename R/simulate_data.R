@@ -79,6 +79,7 @@ set_params_simu <- function(x, model_type) {
 
 
 #' Generate the model formula for the given model type
+#' @export
 gen_model_formula <- function(model_type) {
     params_name <- glue::glue("params_simu_{model_type}")
     params <- the[[params_name]]
