@@ -86,25 +86,25 @@ check_params_recovery <- function(m, model_type) {
 get_target_label <- function(param) {
 
     lookup <- c(
-        "b_std_SES" = "short-term deliberation ~ SES",
-        "b_std_threat" = "short-term deliberation ~ threat",
-        "b_std_deprivation" = "short-term deliberation ~ deprivation",
-        "b_repro_std" = "reproduction ~ short-term deliberation",
+        "b_std_SES" = "std ~ SES",
+        "b_std_threat" = "std ~ threat",
+        "b_std_deprivation" = "std ~ deprivation",
+        "b_repro_std" = "reproduction ~ std",
         "b_repro_SES" = "reproduction ~ SES",
         "b_repro_threat" = "reproduction ~ threat",
         "b_repro_deprivation" = "reproduction ~ deprivation",
-        "b_internalizing_std" = "internalizing ~ short-term deliberation",
+        "b_internalizing_std" = "internalizing ~ std",
         "b_internalizing_repro" = "internalizing ~ reproduction",
         "b_internalizing_SES" = "internalizing ~ SES",
         "b_internalizing_threat" = "internalizing ~ threat",
         "b_internalizing_deprivation" = "internalizing ~ deprivation",
-        "b_internalizing_prod_std_repro" = "internalizing ~ interaction short-term deliberation reproduction",
-        "b_externalizing_std" = "externalizing ~ short-term deliberation",
+        "b_internalizing_prod_std_repro" = "internalizing ~ interaction std/reproduction",
+        "b_externalizing_std" = "externalizing ~ std",
         "b_externalizing_repro" = "externalizing ~ reproduction",
         "b_externalizing_SES" = "externalizing ~ SES",
         "b_externalizing_threat" = "externalizing ~ threat",
         "b_externalizing_deprivation" = "externalizing ~ deprivation",
-        "b_externalizing_prod_std_repro" = "externalizing ~ interaction short-term deliberation reproduction"
+        "b_externalizing_prod_std_repro" = "externalizing ~ interaction std/reproduction"
     )
 
     return(lookup[param])
