@@ -17,3 +17,4 @@ Imports:
     ggplot2,
     lavaan,
     tidyr
+Config/Needs/website: rmarkdown
