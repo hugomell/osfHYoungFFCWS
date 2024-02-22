@@ -1,2 +1,3 @@
 ^LICENSE\.md$
 ^vignettes/articles$
+^_targets/$
