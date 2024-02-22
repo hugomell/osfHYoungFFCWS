@@ -1,6 +1,10 @@
+^renv$
+^renv\.lock$
 ^LICENSE\.md$
 ^vignettes/articles$
-^_targets/$
+^_targets$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^Containerfile$
+^container-scripts$

@@ -1,0 +1,5 @@
+#!/bin/bash
+podman run --pull=false --rm -it \
+    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
+    -v "$(pwd)":/home/root/project \
+       "docker.io/ipea7892/osf-hyoung-ffcws:latest" "$1"
