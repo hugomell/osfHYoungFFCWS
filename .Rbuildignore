@@ -1,3 +1,6 @@
 ^LICENSE\.md$
 ^vignettes/articles$
 ^_targets/$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

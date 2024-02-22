@@ -78,7 +78,9 @@ check_params_recovery <- function(m, model_type) {
         filter(!(parameter %in% c("std_Intercept", "repro_Intercept",
             "internalizing_Intercept", "externalizing_Intercept"))) |>
         select(1:2) |>
-        mutate(brms = params)
+        mutate(simu = params) |>
+        mutate(across(where(is.numeric), \(x) round(x, digits = 3))) |>
+        mutate(across(parameter, \(x) stringr::str_replace(x, "_", " ~ ")))
 }
 
 

@@ -12,3 +12,6 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(osfHYoungFFCWS)
 ```
+
+_TODO:_ Here I should give an overview of how the package can be used. This
+will be included as my "Getting started" page on the package website.

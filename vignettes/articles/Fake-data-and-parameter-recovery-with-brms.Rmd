@@ -1,0 +1,159 @@
+---
+title: "Fake data and parameters recovery with brms"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE
+)
+```
+
+
+```{r setup}
+library(osfHYoungFFCWS)
+library(tidybayes)
+library(dplyr)
+
+# setup to use {targets} pipeline
+# targets_store <- system.file("_targets/", package = "osfHYoungFFCWS")
+# targets_script <- system.file("_targets.R", package = "osfHYoungFFCWS")
+# targets::tar_config_set(script = targets_script, store = targets_store)
+```
+
+
+
+## Baseline model
+
+### Fake data generation
+
+First, let us have a look at the model formula used to simulate data for the
+baseline model:
+
+```{r}
+gen_model_formula(model_type = "baseline")
+```
+
+By using this formula to generate a fake dataset with the `{lavaan}` package,
+we obtain the following distributions for each variable included in the model:
+
+```{r}
+#| message: false
+
+df_baseline <- targets::tar_read(sim_data_baseline)
+hist_sim(df_baseline)
+```
+
+### Recovery of model parameters
+
+Then, we can check whether we were able to recover the values used in the
+simulation.
+
+```{r}
+mod_baseline <- targets::tar_read(fit_baseline)
+check_params_recovery(mod_baseline, model_type = "baseline") |>
+    flextable::flextable() |>
+    flextable::set_header_labels(values = list(
+        Estimate = "mean estimate",
+        simu = "simulation coefficient"
+    )) |>
+    flextable::width(width = 2.5)
+```
+
+Furthermore, we can also have a look at the posterior distributions for each
+regression coefficient estimated with `{brms}`.
+
+First, we plot the posterior distributions for the co-variates that predict
+*short-term deliberation*:
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_baseline, "std", model_type = "baseline")
+```
+
+Then, we do the same for both outcomes of the model, indices for
+*internalizing* and *externalizing* behaviour.
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_baseline, "internalizing", model_type = "baseline")
+```
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_baseline, "externalizing", model_type = "baseline")
+```
+
+## Mediation model
+
+**Model formulas:**
+
+```{r}
+gen_model_formula(model_type = "mediation")
+```
+
+**Distributions for simulated dataset:**
+
+```{r}
+#| message: false
+
+df_mediation <- targets::tar_read(sim_data_mediation)
+hist_sim(df_mediation)
+```
+
+### Recovery of model parameters
+
+Then, we can check whether we were able to recover the values used in the
+simulation.
+
+```{r}
+mod_mediation <- targets::tar_read(fit_mediation)
+check_params_recovery(mod_mediation, model_type = "mediation") |>
+    flextable::flextable() |>
+    flextable::set_header_labels(values = list(
+        Estimate = "mean estimate",
+        simu = "simulation coefficient"
+    )) |>
+    flextable::width(width = 2.5)
+```
+
+Furthermore, we can also have a look at the posterior distributions for each
+regression coefficient estimated with `{brms}`.
+
+First, we plot the posterior distributions for the co-variates that predict
+*short-term deliberation*:
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_mediation, "std", model_type = "mediation")
+```
+
+Then, we do the same for both outcomes of the model, indices for
+*internalizing* and *externalizing* behaviour.
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_mediation, "repro", model_type = "mediation")
+```
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_mediation, "internalizing", model_type = "mediation")
+```
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_mediation, "externalizing", model_type = "mediation")
+```
+
+## Moderation model
+
+
