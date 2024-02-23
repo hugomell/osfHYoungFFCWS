@@ -21,6 +21,7 @@ RUN install2.r --error --skipinstalled flextable
 #RUN installGithub.r --deps FALSE --update FALSE \
 #   hugomell/osf-heloise-young-fragile-family
 
+RUN install2.r --error --skipinstalled devtools
 
 WORKDIR /home/root/project
 
