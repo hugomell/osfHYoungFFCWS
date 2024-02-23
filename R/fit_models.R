@@ -100,13 +100,13 @@ get_target_label <- function(param) {
         "b_internalizing_SES" = "internalizing ~ SES",
         "b_internalizing_threat" = "internalizing ~ threat",
         "b_internalizing_deprivation" = "internalizing ~ deprivation",
-        "b_internalizing_prod_std_repro" = "internalizing ~ interaction std/reproduction",
+        "b_internalizing_prod_std_repro" = "internalizing ~ std*reproduction",
         "b_externalizing_std" = "externalizing ~ std",
         "b_externalizing_repro" = "externalizing ~ reproduction",
         "b_externalizing_SES" = "externalizing ~ SES",
         "b_externalizing_threat" = "externalizing ~ threat",
         "b_externalizing_deprivation" = "externalizing ~ deprivation",
-        "b_externalizing_prod_std_repro" = "externalizing ~ interaction std/reproduction"
+        "b_externalizing_prod_std_repro" = "externalizing ~ std*reproduction"
     )
 
     return(lookup[param])
@@ -163,7 +163,7 @@ get_target_coeff <- function(param, model_type) {
 
 #' Plot posterior distributions
 #' @export
-plot_posteriors <- function(m, y, model_type) {
+plot_posteriors <- function(m, y, model_type, plot_title) {
 
     colors <- list(std = "#1B9E77", repro = "#D95F02",
                    internalizing = "#7570B3", externalizing = "#66A61E")
@@ -184,8 +184,10 @@ plot_posteriors <- function(m, y, model_type) {
         tidybayes::stat_halfeye(point_interval = tidybayes::mode_hdi,
                                 .width = c(.95, .5), slab_fill = colors[[y]],
                                 slab_color = "black", slab_linewidth = 0.6) +
-        geom_vline(aes(xintercept = target_coeff)) +
+        geom_vline(aes(xintercept = target_coeff), linewidth = 1.4, alpha = 0.7) +
         scale_y_continuous(NULL, breaks = NULL) +
         theme_ggdist() +
-        facet_wrap(~ name_labels, scales = "free")
+        facet_wrap(~ name_labels, scales = "free") +
+        xlab(expression(beta ~ "coefficient")) +
+        ggtitle(plot_title, subtitle = "Density, mean values (dots), 66% and 95% intervals and simulation values (vertical lines).")
 }
