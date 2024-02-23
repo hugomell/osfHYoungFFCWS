@@ -13,5 +13,5 @@ knitr::opts_chunk$set(
 library(osfHYoungFFCWS)
 ```
 
-_TODO:_ Here I should give an overview of how the package can be used. This
-will be included as my "Getting started" page on the package website.
+_TODO:_ Give an overview of how the exported functions and explain how to run
+the `{targets}` pipeline.

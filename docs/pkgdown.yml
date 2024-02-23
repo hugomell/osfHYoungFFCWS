@@ -4,5 +4,8 @@ pkgdown_sha: ~
 articles:
   Data-simulation-and-parameter-recovery-with-brms: Data-simulation-and-parameter-recovery-with-brms.html
   osfHYoungFFCWS: osfHYoungFFCWS.html
-last_built: 2024-02-23T09:51Z
+last_built: 2024-02-23T11:19Z
+urls:
+  reference: https://hugomell.github.io/osf-heloise-young-fragile-family/reference
+  article: https://hugomell.github.io/osf-heloise-young-fragile-family/articles
 
