@@ -13,7 +13,7 @@ remotes::install_github(hugomell/osfHYoungFFCWS)
 It provides R code and instructions to run a demonstration pipeline that (i)
 simulates fake datasets based on the equations described for the three main
 models in the pre-registration, (ii) attempts to recover the structural
-parameters used for the simulation by fitting regression models with `{brms}`.
+parameters used for the simulation by estimating path models with `{brms}`.
 Tables and plots obtained after running the demonstration pipeline can be
 found
 [here](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).
@@ -38,11 +38,11 @@ local library with the appropriate versions of the R dependencies.
 The second strategy is less reproducible since the R installation and the
 system dependencies will need to be managed by the user. For instance, the
 installation of the `Stan` probabilistic programming language used by `{brms}`
-to fit bayesian regression models is not recorded by `{renv}` and will need to
-be performed in a separate step. Nevertheless, it has the advantage that it
-does not require the installation and use of specialized software for
-launching and managing containers, which might not be familiar to certain R
-users.
+to fit path models using bayesian estimation procedures is not recorded by
+`{renv}` and will need to be performed in a separate step. Nevertheless, it
+has the advantage that it does not require the installation and use of
+specialized software for launching and managing containers, which might not be
+familiar to certain R users.
 
 ### Using the container image
 
