@@ -64,19 +64,60 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="demonstration-pipeline-for-the-osf-pre-registration">Demonstration pipeline for the OSF pre-registration<a class="anchor" aria-label="anchor" href="#demonstration-pipeline-for-the-osf-pre-registration"></a>
+<div class="page-header"><h1 id="code-and-dependencies-to-run-the-demonstration-pipeline">Code and dependencies to run the demonstration pipeline<a class="anchor" aria-label="anchor" href="#code-and-dependencies-to-run-the-demonstration-pipeline"></a>
 </h1></div>
-<p>Below you will find instructions to reproduce the demo analysis attached to the OSF pre-registration either by directly using the dedicated <a href="LINK">container image</a> with all tools pre-installed or by restoring the appropriate computing environment locally with the <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> package.</p>
+<p>This repository is a companion to an <a href="XXX">OSF pre-registration</a>. It is organized as an R package and can be installed with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="va">hugomell</span><span class="op">/</span><span class="va">osfHYoungFFCWS</span><span class="op">)</span></span></code></pre></div>
+<p>It provides R code and instructions to run a demonstration pipeline that (i) simulates fake datasets based on the equations described for the three main models in the pre-registration, (ii) attempts to recover the structural parameters used for the simulation by fitting regression models with <a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a>. Tables and plots obtained after running the demonstration pipeline can be found <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html">here</a>.</p>
+<p>To ensure that the analysis pipeline is <strong><em>reproducible</em></strong>, we detail in the next sections how to: (i) set up the computing environment with all the required dependencies, and (ii) run the demonstration pipeline.</p>
 <div class="section level2">
-<h2 id="instructions-for-container-image">Instructions for container image<a class="anchor" aria-label="anchor" href="#instructions-for-container-image"></a>
+<h2 id="setting-up-the-computing-environment">Setting up the computing environment<a class="anchor" aria-label="anchor" href="#setting-up-the-computing-environment"></a>
 </h2>
-<p><em>TODO</em></p>
+<p>Two strategies are proposed to get all required dependencies up and running on a new machine. The first strategy uses a container image to generate on demand <em>virtualized</em> computing environments isolated from the rest of the host machine and with all the tools necessary to run the pipeline pre-installed. The second strategy uses <a href="https://rstudio.github.io/renv/articles/renv.html" class="external-link"><code>{renv}</code></a> to create a project local library with the appropriate versions of the R dependencies.</p>
+<p>The second strategy is less reproducible since the R installation and the system dependencies will need to be managed by the user. For instance, the installation of the <code>Stan</code> probabilistic programming language used by <a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a> to fit bayesian regression models is not recorded by <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> and will need to be performed in a separate step. Nevertheless, it has the advantage that it does not require the installation and use of specialized software for launching and managing containers, which might not be familiar to certain R users.</p>
+<div class="section level3">
+<h3 id="using-the-container-image">Using the container image<a class="anchor" aria-label="anchor" href="#using-the-container-image"></a>
+</h3>
+<p>First, you will need a machine with <a href="https://podman.io/" class="external-link">Podman</a> installed (<a href="https://www.docker.com/" class="external-link">Docker</a> might also work but has not been properly tested). Instructions for the installation of Podman on various platforms can be found in their official <a href="https://podman.io/docs/installation" class="external-link">documentation</a>.</p>
+<p>In a terminal, you can then execute the following podman command which will <em>pull</em> the container image on your local machine:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">podman</span> pull docker.io/ipea7892/osf-hyoung-ffcws-dev:latest </span></code></pre></div>
+<p>Once the image has been downloaded, to launch a container:</p>
+<ol style="list-style-type: decimal">
+<li><p>Open a terminal in your project directory</p></li>
+<li><p>Copy/paste the following command in the terminal:</p></li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">podman</span> run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">-p</span> <span class="at">-e</span> DISABLE_AUTH=true <span class="at">-p</span> 127.0.0.1:8787:8787 <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>       <span class="at">-v</span> <span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span>:/home/root/project <span class="st">"osf-hyoung-ffcws-dev:latest"</span></span></code></pre></div>
+<p>This will create a container based on the container image you just pulled and will automatically start an RStudio server session from within the container.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>
+<p>Open a web browser and type <code>localhost:8787</code> in your address bar.</p>
+<p>Now you will be connected to the RStudio session that is running from the container. You will have access to the files in your project directory and to all the packages used by the demonstration pipeline.</p>
+</li>
+</ol>
+<p>To stop the container press <code>Ctrl-c</code> in the terminal to close the RStudio session and type <code>exit</code> to leave and destroy the running container.</p>
+</div>
+<div class="section level3">
+<h3 id="using-renv">Using <code>{renv}</code>
+<a class="anchor" aria-label="anchor" href="#using-renv"></a>
+</h3>
+</div>
+<div class="section level3">
+<h3 id="restoring-r-dependencies">Restoring R dependencies<a class="anchor" aria-label="anchor" href="#restoring-r-dependencies"></a>
+</h3>
+<p>First, you need to copy the <code>renv.lock</code> located at the root of the github <a href="https://github.com/hugomell/osf-heloise-young-fragile-family" class="external-link">repository</a> to your project folder. This is the file used by <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> to record the exact versions of the R dependencies that need to be present to execute the code for the project.</p>
+<p>Then, to restore the computing environment run <code>renv::init()</code> and select the <code>Restore the project from the lockfile</code> option. This will install all the necessary R packages in a new <code>renv/</code> folder at the root of your project.</p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="instructions-for-restoration-with-renv">Instructions for restoration with <code>{renv}</code>
-<a class="anchor" aria-label="anchor" href="#instructions-for-restoration-with-renv"></a>
+<h2 id="running-the-demonstration-pipeline">Running the demonstration pipeline<a class="anchor" aria-label="anchor" href="#running-the-demonstration-pipeline"></a>
 </h2>
-<p><em>TODO</em></p>
+<p>The analysis pipeline is managed using the R package <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>.</p>
+<p>To execute the pipeline on your machine, you first need to run <code>osfHYoungFFCWS::get_targets_files()</code> from an R environnement with our package installed. This will copy two files to the root of your working directory: <code>_targets.R</code> and <code>Data-simulation-and-parameter-recovery-with-brms.Rmd</code>. The former defines all the steps of our pipeline and the later is an R Markdown file used to generate an HTML report with tables and plots.</p>
+<p>Then, simply execute <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html" class="external-link">targets::tar_make()</a></code> which will run the pipeline. This command will create at the root of the working directory a <code>_targets/</code> folder used internally by <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a> to store the results of the computations. A <code>Data-simulation-and-parameter-recovery-with-brms.hmtl</code> should also have been generated automatically from the R Markdown file. The same report is available as a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>.</p>
+<p>See the <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/articles/osfHYoungFFCWS.html">Getting started</a> as well as the <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/reference/index.html">Reference</a> sections for more information on the functions used in the pipeline and ways to modify the default values for the simulation parameters and the models’ priors.</p>
+<p>To learn more about managing R pipelines with <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>, you can refer to the package’s <a href="https://books.ropensci.org/targets/" class="external-link">User Guide</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

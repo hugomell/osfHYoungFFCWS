@@ -16,7 +16,7 @@ models in the pre-registration, (ii) attempts to recover the structural
 parameters used for the simulation by fitting regression models with `{brms}`.
 Tables and plots obtained after running the demonstration pipeline can be
 found
-[here](https://hugomell.github.io/articles/Data-simulation-and-parameter-recovery-with-brms.hmtl).
+[here](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
 To ensure that the analysis pipeline is ***reproducible***, we detail in
 the next sections how to: (i) set up the computing environment with all the
@@ -83,7 +83,7 @@ podman run --rm -it -p -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 To stop the container press `Ctrl-c` in the terminal to close the RStudio
 session and type `exit` to leave and destroy the running container.
 
-### Using the `{renv}` package
+### Using `{renv}`
 
 ### Restoring R dependencies
 
@@ -103,7 +103,7 @@ necessary R packages in a new `renv/` folder at the root of your project.
 ## Running the demonstration pipeline
 
 
-The analysis pipeline is managed using [`{targets}`](https://github.com/ropensci/targets).
+The analysis pipeline is managed using the R package `{targets}`.
 
 To execute the pipeline on your machine, you first need to run
 `osfHYoungFFCWS::get_targets_files()` from an R environnement with our package
