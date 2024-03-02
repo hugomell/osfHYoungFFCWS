@@ -93,9 +93,16 @@ your project folder.
 This is the file used by `{renv}` to record the exact versions of the R
 dependencies that need to be present to execute the code for the project.
 
+If you do not already have `renv` installed on your machine, run
+`install.packages("renv")`.
+
 Then, to restore the computing environment run `renv::init()` and select the
 `Restore the project from the lockfile` option. This will install all the
 necessary R packages in a new `renv/` folder at the root of your project.
+
+Now, the next time we open RStudio or an R console from the root of our
+project directory the `renv` environment will be automatically loaded and all
+the packages should be available.
 
 
 
@@ -115,7 +122,7 @@ Markdown file used to generate an HTML report with tables and plots.
 Then, simply execute `targets::tar_make()` which will run the pipeline. This
 command will create at the root of the working directory a `_targets/` folder
 used internally by `{targets}` to store the results of the computations. A
-`Data-simulation-and-parameter-recovery-with-brms.hmtl` should also have been
+`Data-simulation-and-parameter-recovery-with-brms.html` should also have been
 generated automatically from the R Markdown file. The same report is available
 as a `{pkgdown}`
 [article](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).

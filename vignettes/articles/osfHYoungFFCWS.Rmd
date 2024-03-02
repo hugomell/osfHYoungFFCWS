@@ -5,13 +5,117 @@ title: "osf-demo-pipeline"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
+
+Below we provide an overview of the main functions from this package that are
+used in the demonstration pipeline. To see the output of the demonstration
+pipeline refer to this
+[article](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).
+Recall also from the instructions in the
+[README](https://hugomell.github.io/osf-heloise-young-fragile-family/index.html)
+that the files that define the `targets` pipeline can be obtained with
+`osfHYoungFFCWS::gen_targets_script()`.
+
+We start by loading the package into our R environment:
 
 ```{r setup}
 library(osfHYoungFFCWS)
 ```
 
-_TODO:_ Give an overview of how the exported functions and explain how to run
-the `{targets}` pipeline.
+The first step of the pipeline consists in simulating datasets with all the
+variables used in each of the three types of path models (baseline, mediation
+and moderation models).
+
+The values used by default for the simulation are based on the associations
+found between the variables of interest in previous studies. They can be
+inspected with a call to `get_params_simu()`:
+
+```r
+get_params_simu(model_type = "<baseline|mediation|moderation>")
+```
+
+Overriding this default values can be achieved simply by providing a new
+vector of values to the `set_params_simu()` function:
+
+```r
+set_params_simu(x, model_type = "<baseline|mediation|moderation>")
+# here x is a numeric vector of length equal to the number of path coefficients
+# for the chosen type of model 
+```
+
+As an example, to change the strength of the association between short-term
+deliberation and externalizing symptoms for the baseline model to a new value
+of 0.45 (standardized coefficient), we would run the following commands:
+
+```r
+# we first assign the default values to a new vector
+coeffs <- get_params_simu(model_type = "baseline")
+# we then modify the values for the relationship(s) of interest
+coeffs["externalizing ~ std"] <- 0.45
+# we use the new list of coefficients to update the simulation parameters
+set_params_simu(coeffs, model_type = "baseline")
+```
+
+Generating datasets for specific path models using the default package values
+or values set by the user can be done with the `simulate_dataset()` function:
+
+```r
+simulate_dataset(model_type = "<baseline|mediation|moderation>")
+```
+
+The `hist_sim(<dataset>)` function can be used to quickly plot histograms for all the
+variables in the dataset.
+
+Once we have simulated datasets, we can use the `brms_fit()` function to
+estimate the associated path models with brms:
+
+```r
+brms_fit(<simulated dataset>, model_type = "<baseline|mediation|moderation>")
+```
+
+With brms fit objects obtained, we can now check whether our bayesian estimation
+procedure was able to recover the values used as simulation parameters. This can
+be done by generating a table where each row correspond to the path model
+coefficient for a given relationship and the columns give respectively the
+mean of the posterior distribution and the target value used for the
+simulation. The function `check_params_recovery()` will produce such a table:
+
+```r
+check_params_recovery(<model fit>, model_type = "<baseline|mediation|moderation>") |>
+```
+
+However, richer information can be obtained by plotting the full posterior
+distributions for all the relationships estimated in the path model. For
+instance, to assess the parameter recovery for the mediation model, we would
+run the following commands:
+
+```r
+# %#% Mediation model
+
+# posterior distributions for the predictors of short-term deliberation
+plot_posteriors(mod_mediation, "std", model_type = "mediation",
+    plot_title = "Mediation model - predictors of short-term deliberation")
+
+# posterior distributions for the predictors of reproductive efforts
+plot_posteriors(mod_mediation, "repro", model_type = "mediation",
+    plot_title = "Mediation model - predictors of reproductive effort")
+
+# posterior distributions for the predictors of internalizing symptoms
+plot_posteriors(mod_mediation, "internalizing", model_type = "mediation",
+    plot_title = "Mediation model - predictors of internalizing symptoms")
+
+# posterior distributions for the predictors of externalizing symptoms
+plot_posteriors(mod_mediation, "externalizing", model_type = "mediation",
+    plot_title = "Mediation model - predictors of externalizing symptoms")
+```
+
+The graphs created by `plot_posteriors()` will show in addition to the
+posterior distribution the target value used in the simulation as a vertical
+line, as well as the mean of the posterior (black dot), 66% and 95% credible
+intervals (black horizontal segments). See the
+[article](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html)
+with the output of the demonstration pipeline for examples.
+

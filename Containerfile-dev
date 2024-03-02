@@ -35,6 +35,9 @@ RUN /custom_scripts/install_radian.sh
 
 RUN echo 'options(httpgd.host = "0.0.0.0", httpgd.port = 8888)' >> /root/.Rprofile
 
+RUN /rocker_scripts/install_quarto.sh
+RUN install2.r --error --skipinstalled quarto
+
 EXPOSE 8787
 EXPOSE 8888
 

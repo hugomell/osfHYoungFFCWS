@@ -1,6 +1,6 @@
 # Load packages required to define the pipeline:
 library(targets)
-# library(tarchetypes) # Load other packages as needed.
+library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
 tar_option_set(packages = "osfHYoungFFCWS")
@@ -30,10 +30,10 @@ list(
   tar_target(
     name = fit_moderation,
     command = brms_fit(sim_data_moderation, model_type = "moderation")
-  )#,
-  # # Generate quarto report
-  # tar_quarto(
-  #       report,
-  #       path = "qmd/simu-pipeline.qmd"
-  #   )
+  ),
+  # Generate quarto report
+  tar_quarto(
+    report,
+    path = "Data-simulation-and-parameter-recovery-with-brms.Rmd"
+  )
 )

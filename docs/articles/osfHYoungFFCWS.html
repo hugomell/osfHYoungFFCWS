@@ -73,10 +73,88 @@
 
     
     
+<p>Below we provide an overview of the main functions from this package
+that are used in the demonstration pipeline. To see the output of the
+demonstration pipeline refer to this <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>.
+Recall also from the instructions in the <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/index.html">README</a>
+that the files that define the <code>targets</code> pipeline can be
+obtained with <code>osfHYoungFFCWS::gen_targets_script()</code>.</p>
+<p>We start by loading the package into our R environment:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hugomell.github.io/osf-heloise-young-fragile-family/">osfHYoungFFCWS</a></span><span class="op">)</span></span></code></pre></div>
-<p><em>TODO:</em> Give an overview of how the exported functions and
-explain how to run the <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a> pipeline.</p>
+<p>The first step of the pipeline consists in simulating datasets with
+all the variables used in each of the three types of path models
+(baseline, mediation and moderation models).</p>
+<p>The values used by default for the simulation are based on the
+associations found between the variables of interest in previous
+studies. They can be inspected with a call to
+<code><a href="../reference/get_params_simu.html">get_params_simu()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_params_simu.html">get_params_simu</a></span><span class="op">(</span>model_type <span class="op">=</span> <span class="st">"&lt;baseline|mediation|moderation&gt;"</span><span class="op">)</span></span></code></pre></div>
+<p>Overriding this default values can be achieved simply by providing a
+new vector of values to the <code><a href="../reference/set_params_simu.html">set_params_simu()</a></code> function:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/set_params_simu.html">set_params_simu</a></span><span class="op">(</span><span class="va">x</span>, model_type <span class="op">=</span> <span class="st">"&lt;baseline|mediation|moderation&gt;"</span><span class="op">)</span></span>
+<span><span class="co"># here x is a numeric vector of length equal to the number of path coefficients</span></span>
+<span><span class="co"># for the chosen type of model </span></span></code></pre></div>
+<p>As an example, to change the strength of the association between
+short-term deliberation and externalizing symptoms for the baseline
+model to a new value of 0.45 (standardized coefficient), we would run
+the following commands:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we first assign the default values to a new vector</span></span>
+<span><span class="va">coeffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_params_simu.html">get_params_simu</a></span><span class="op">(</span>model_type <span class="op">=</span> <span class="st">"baseline"</span><span class="op">)</span></span>
+<span><span class="co"># we then modify the values for the relationship(s) of interest</span></span>
+<span><span class="va">coeffs</span><span class="op">[</span><span class="st">"externalizing ~ std"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.45</span></span>
+<span><span class="co"># we use the new list of coefficients to update the simulation parameters</span></span>
+<span><span class="fu"><a href="../reference/set_params_simu.html">set_params_simu</a></span><span class="op">(</span><span class="va">coeffs</span>, model_type <span class="op">=</span> <span class="st">"baseline"</span><span class="op">)</span></span></code></pre></div>
+<p>Generating datasets for specific path models using the default
+package values or values set by the user can be done with the
+<code><a href="../reference/simulate_dataset.html">simulate_dataset()</a></code> function:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_dataset.html">simulate_dataset</a></span><span class="op">(</span>model_type <span class="op">=</span> <span class="st">"&lt;baseline|mediation|moderation&gt;"</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>hist_sim(&lt;dataset&gt;)</code> function can be used to
+quickly plot histograms for all the variables in the dataset.</p>
+<p>Once we have simulated datasets, we can use the
+<code><a href="../reference/brms_fit.html">brms_fit()</a></code> function to estimate the associated path models
+with brms:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">brms_fit</span>(<span class="sc">&lt;</span>simulated dataset<span class="sc">&gt;</span>, <span class="at">model_type =</span> <span class="st">"&lt;baseline|mediation|moderation&gt;"</span>)</span></code></pre></div>
+<p>With brms fit objects obtained, we can now check whether our bayesian
+estimation procedure was able to recover the values used as simulation
+parameters. This can be done by generating a table where each row
+correspond to the path model coefficient for a given relationship and
+the columns give respectively the mean of the posterior distribution and
+the target value used for the simulation. The function
+<code><a href="../reference/check_params_recovery.html">check_params_recovery()</a></code> will produce such a table:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">check_params_recovery</span>(<span class="sc">&lt;</span>model fit<span class="sc">&gt;</span>, <span class="at">model_type =</span> <span class="st">"&lt;baseline|mediation|moderation&gt;"</span>) <span class="sc">|&gt;</span></span></code></pre></div>
+<p>However, richer information can be obtained by plotting the full
+posterior distributions for all the relationships estimated in the path
+model. For instance, to assess the parameter recovery for the mediation
+model, we would run the following commands:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># %#% Mediation model</span></span>
+<span></span>
+<span><span class="co"># posterior distributions for the predictors of short-term deliberation</span></span>
+<span><span class="fu"><a href="../reference/plot_posteriors.html">plot_posteriors</a></span><span class="op">(</span><span class="va">mod_mediation</span>, <span class="st">"std"</span>, model_type <span class="op">=</span> <span class="st">"mediation"</span>,</span>
+<span>    plot_title <span class="op">=</span> <span class="st">"Mediation model - predictors of short-term deliberation"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># posterior distributions for the predictors of reproductive efforts</span></span>
+<span><span class="fu"><a href="../reference/plot_posteriors.html">plot_posteriors</a></span><span class="op">(</span><span class="va">mod_mediation</span>, <span class="st">"repro"</span>, model_type <span class="op">=</span> <span class="st">"mediation"</span>,</span>
+<span>    plot_title <span class="op">=</span> <span class="st">"Mediation model - predictors of reproductive effort"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># posterior distributions for the predictors of internalizing symptoms</span></span>
+<span><span class="fu"><a href="../reference/plot_posteriors.html">plot_posteriors</a></span><span class="op">(</span><span class="va">mod_mediation</span>, <span class="st">"internalizing"</span>, model_type <span class="op">=</span> <span class="st">"mediation"</span>,</span>
+<span>    plot_title <span class="op">=</span> <span class="st">"Mediation model - predictors of internalizing symptoms"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># posterior distributions for the predictors of externalizing symptoms</span></span>
+<span><span class="fu"><a href="../reference/plot_posteriors.html">plot_posteriors</a></span><span class="op">(</span><span class="va">mod_mediation</span>, <span class="st">"externalizing"</span>, model_type <span class="op">=</span> <span class="st">"mediation"</span>,</span>
+<span>    plot_title <span class="op">=</span> <span class="st">"Mediation model - predictors of externalizing symptoms"</span><span class="op">)</span></span></code></pre></div>
+<p>The graphs created by <code><a href="../reference/plot_posteriors.html">plot_posteriors()</a></code> will show in
+addition to the posterior distribution the target value used in the
+simulation as a vertical line, as well as the mean of the posterior
+(black dot), 66% and 95% credible intervals (black horizontal segments).
+See the <a href="https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>
+with the output of the demonstration pipeline for examples.</p>
   </main>
 </div>
 
