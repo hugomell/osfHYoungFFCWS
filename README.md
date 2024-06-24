@@ -7,7 +7,7 @@ This repository is a companion to an [OSF pre-registration](XXX). It is
 organized as an R package and can be installed with:
 
 ```r
-remotes::install_github(hugomell/osfHYoungFFCWS)
+remotes::install_github("hugomell/osfHYoungFFCWS")
 ```
 
 It provides R code and instructions to run a demonstration pipeline that (i)
@@ -66,7 +66,7 @@ Once the image has been downloaded, to launch a container:
 2. Copy/paste the following command in the terminal:
 
 ```bash
-podman run --rm -it -p -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
+podman run --rm -it -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
        -v "$(pwd)":/home/root/project "osf-hyoung-ffcws-dev:latest"
 ```
   
@@ -128,10 +128,13 @@ as a `{pkgdown}`
 [article](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
 
-See the [Getting started](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/osfHYoungFFCWS.html)
-as well as the [Reference](https://hugomell.github.io/osf-heloise-young-fragile-family/reference/index.html) sections for more information on the functions
-used in the pipeline and ways to modify the default values for the
-simulation parameters and the models' priors.
+See the [Getting
+started](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/osfHYoungFFCWS.html)
+as well as the
+[Reference](https://hugomell.github.io/osf-heloise-young-fragile-family/reference/index.html)
+sections for more information on the functions used in the pipeline and ways
+to modify the default values for the simulation parameters and the models'
+priors.
 
 To learn more about managing R pipelines with `{targets}`, you can refer to
 the package's [User Guide](https://books.ropensci.org/targets/).
