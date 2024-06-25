@@ -31,8 +31,8 @@ list(
     name = fit_moderation,
     command = brms_fit(sim_data_moderation, model_type = "moderation")
   ),
-  # Generate quarto report
-  tar_quarto(
+  # Generate Rmd report
+  tar_render(
     report,
     path = "Data-simulation-and-parameter-recovery-with-brms.Rmd"
   )

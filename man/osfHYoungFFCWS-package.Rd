@@ -8,6 +8,13 @@
 \description{
 Demonstration pipeline for the main analyses described in the OSF pre-registration 'TITLE' (LINK). It includes the simulation of data and and parameter recovery through bayesian estimation of linear models.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://hugomell.github.io/osf-heloise-young-fragile-family/}
+}
+
+}
 \author{
 \strong{Maintainer}: Hugo Mell \email{hugo.mell@ipea7892.fr} (\href{https://orcid.org/0000-0002-2346-1008}{ORCID})
 

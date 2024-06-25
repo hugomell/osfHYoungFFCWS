@@ -15,6 +15,7 @@ Imports:
     brms,
     dplyr,
     ggplot2,
+    glue,
     lavaan,
     tidyr
 Config/Needs/website: rmarkdown

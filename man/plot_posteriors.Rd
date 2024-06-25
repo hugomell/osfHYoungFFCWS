@@ -4,7 +4,7 @@
 \alias{plot_posteriors}
 \title{Plot posterior distributions}
 \usage{
-plot_posteriors(m, y, model_type)
+plot_posteriors(m, y, model_type, plot_title)
 }
 \description{
 Plot posterior distributions

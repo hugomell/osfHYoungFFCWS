@@ -3,11 +3,11 @@
 # Code and dependencies to run the demonstration pipeline
 
 
-This repository is a companion to an [OSF pre-registration](XXX). It is
+This repository is a companion to an [OSF pre-registration](https://osf.io/nck3m/). It is
 organized as an R package and can be installed with:
 
 ```r
-remotes::install_github("hugomell/osfHYoungFFCWS")
+devtools::install_github("hugomell/osfHYoungFFCWS", dependencies = FALSE)
 ```
 
 It provides R code and instructions to run a demonstration pipeline that (i)
