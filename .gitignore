@@ -4,4 +4,5 @@
 .DS_Store
 .quarto
 _targets/
-renv/
+renv/library/
+.cache/

@@ -1,27 +1,4 @@
-FROM docker.io/rocker/r2u:22.04
-
-ENV S6_VERSION=v2.1.0.2
-ENV RSTUDIO_VERSION=2023.12.0+369
-ENV DEFAULT_USER=rstudio
-ENV PANDOC_VERSION=default
-
-COPY container-scripts/rocker_scripts /rocker_scripts
-COPY container-scripts/custom_scripts /custom_scripts
-
-RUN /rocker_scripts/install_rstudio.sh
-RUN /rocker_scripts/install_pandoc.sh
-RUN install2.r "targets" "tarchetypes" "visNetwork"
-
-RUN /custom_scripts/install_stan.sh
-
-RUN install2.r --error --skipinstalled posterior loo bayesplot tidybayes
-RUN install2.r --error --skipinstalled brms
-RUN install2.r --error --skipinstalled lavaan
-RUN install2.r --error --skipinstalled flextable
-#RUN installGithub.r --deps FALSE --update FALSE \
-#   hugomell/osf-heloise-young-fragile-family
-
-RUN install2.r --error --skipinstalled devtools
+FROM docker.io/rocker/rstudio:4.4.1 AS base
 
 WORKDIR /home/root/project
 
@@ -30,6 +7,25 @@ RUN echo 'session-default-working-dir=/home/root/project' >> \
     echo 'session-default-new-project-dir=/home/root/project' >> \
     /etc/rstudio/rsession.conf
 
-EXPOSE 8787
 
-CMD ["/init"]
+# {renv} - restore project library
+RUN mkdir -p renv
+COPY renv.lock renv.lock
+COPY .Rprofile .Rprofile
+COPY renv/activate.R renv/activate.R
+
+## install renv
+RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
+RUN R -e "remotes::install_github('rstudio/renv@v1.0.7')"
+
+## restore project library
+ENV RENV_PATHS_LIBRARY /home/root/renv/library
+RUN R -e "renv::restore()"
+
+# stan - install cmdstan using {cmdstanr}
+COPY container-scripts/ /container-scripts
+RUN /container-scripts/install_stan.sh
+
+# install project package
+RUN R -e "renv::install('devtools')"
+# RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FALSE)"

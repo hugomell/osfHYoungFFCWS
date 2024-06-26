@@ -1,6 +1,0 @@
-#!/bin/bash
-ls "./run" 2> /dev/null && cd ..
-podman run --rm -it \
-    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
-    -v "$(pwd)":/home/root/project \
-       "osf-hyoung-ffcws:latest" bash

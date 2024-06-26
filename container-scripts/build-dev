@@ -1,3 +1,0 @@
-#!/bin/bash
-ls "./build-dev" 2> /dev/null && cd ..
-podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws-dev:latest -f Containerfile-dev .

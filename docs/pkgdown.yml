@@ -1,0 +1,11 @@
+pandoc: '3.2'
+pkgdown: 2.0.9
+pkgdown_sha: ~
+articles:
+  Data-simulation-and-parameter-recovery-with-brms: Data-simulation-and-parameter-recovery-with-brms.html
+  osfHYoungFFCWS: osfHYoungFFCWS.html
+last_built: 2024-06-26T15:52Z
+urls:
+  reference: https://hugomell.github.io/osfHYoungFFCWS/reference
+  article: https://hugomell.github.io/osfHYoungFFCWS/articles
+
