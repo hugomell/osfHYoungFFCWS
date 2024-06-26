@@ -1,3 +1,2 @@
 main:
-  script: /usr/local/lib/R/site-library/osfHYoungFFCWS/_targets.R
   store: '/home/root/project/_targets/'

@@ -3,6 +3,7 @@ title: "Data simulation and parameters recovery with brms"
 output:
   html_document:
     self_contained: true
+    toc: true
 ---
 
 ```{r, include = FALSE}

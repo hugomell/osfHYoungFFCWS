@@ -2,10 +2,10 @@
 % Please edit documentation in R/utils.R
 \name{setup_demo_pipeline}
 \alias{setup_demo_pipeline}
-\title{Generate a \verb{_targets.R} that defines the analytical pipeline}
+\title{Copy files to run demonstration pipeline in root}
 \usage{
 setup_demo_pipeline()
 }
 \description{
-Generate a \verb{_targets.R} that defines the analytical pipeline
+Copy files to run demonstration pipeline in root
 }

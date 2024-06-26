@@ -3,7 +3,8 @@
 # Code and dependencies to run the demonstration pipeline
 
 
-This repository is a companion to an [OSF pre-registration](https://osf.io/nck3m/). It is
+This repository is a companion to an 
+[OSF pre-registration](https://osf.io/nck3m/). It is
 organized as an R package and can be installed with:
 
 ```r
@@ -16,7 +17,7 @@ models in the pre-registration, (ii) attempts to recover the structural
 parameters used for the simulation by estimating path models with `{brms}`.
 Tables and plots obtained after running the demonstration pipeline can be
 found
-[here](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).
+[here](/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
 To ensure that the analysis pipeline is ***reproducible***, we detail in
 the next sections how to: (i) set up the computing environment with all the
