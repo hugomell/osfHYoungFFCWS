@@ -8,28 +8,48 @@ This repository is a companion to an
 organized as an R package and can be installed with:
 
 ```r
+install.packages("devtools")
 devtools::install_github("hugomell/osfHYoungFFCWS", dependencies = FALSE)
 ```
 
-It provides R code and instructions to run a demonstration pipeline that (i)
-simulates fake datasets based on the equations described for the three main
-models in the pre-registration, (ii) attempts to recover the structural
-parameters used for the simulation by estimating path models with `{brms}`.
+It provides R code and instructions to run a demonstration pipeline that:
+1. simulates fake datasets based on the equations described for the three main
+models in the pre-registration
+2. attempts to recover the structural parameters used for the simulation by
+   estimating path models with `{brms}`
+
 Tables and plots obtained after running the demonstration pipeline can be
 found
 [here](https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
-To ensure that the analysis pipeline is ***reproducible***, we detail in
-the next sections how to: (i) set up the computing environment with all the
-required dependencies, and (ii) run the demonstration pipeline.
-
-
+In the next section, we explain how to reproduce these results.
 
 
 ## Setting up the computing environment
 
+### On a local machine
 
-Two strategies are proposed to get all required dependencies up and running
+We will use a dedicated container image that comes with R, RStudio,
+[Stan](https://mc-stan.org/) (used to fit the bayesian models) and all the
+required R packages.
+
+#### for linux users
+
+```bash
+# install podman for Debian/Ubuntu
+sudo apt install podman
+```
+
+### for Windows users
+
+
+
+
+### On a remote machine
+
+
+
+
 on a new machine. The first strategy uses a container image to generate on
 demand *virtualized* computing environments isolated from the rest of
 the host machine and with all the tools necessary to run the pipeline

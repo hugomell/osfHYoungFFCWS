@@ -28,5 +28,5 @@ RUN /container-scripts/install_stan.sh
 
 # install project package
 RUN R -e "renv::install('devtools')"
-RUN echo "-ANCHOR-
+RUN echo "-ANCHOR-"
 RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FALSE)"

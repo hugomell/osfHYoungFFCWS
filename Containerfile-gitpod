@@ -1,0 +1,26 @@
+FROM docker.io/rocker/r2u:22.04
+
+COPY container-scripts/ /container-scripts
+
+ENV PANDOC_VERSION=default
+RUN /container-scripts/install_pandoc.sh
+RUN R -e 'install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))'
+RUN R -e 'library(cmdstanr); install_cmdstan(cores = 2)'
+RUN /container-scripts/install_stan.sh
+
+RUN install2.r \
+  "brms" \
+  "dplyr" \
+  "ggplot2" \
+  "glue" \
+  "lavaan" \
+  "tidyr" \
+  "flextable" \
+  "pkgdown" \
+  "tarchetypes" \
+  "targets" \
+  "tidybayes" \
+  "visNetwork" \
+  "devtools"
+
+RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FALSE)"

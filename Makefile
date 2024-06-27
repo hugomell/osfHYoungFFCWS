@@ -6,21 +6,21 @@ STR_DATE = DUMMY-DATE-- $(DATE)
 
 build:
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
-	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:latest \
+	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:pre-reg \
 		-f Containerfile .
 	sed -i 's/DUMMY-DATE--.*/-ANCHOR-"/' Containerfile
 
 run:
 	podman run --rm -it \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
-	    -v "$(PROJECT_DIR)":/home/root/project "docker.io/ipea7892/osf-hyoung-ffcws:latest"
+	    -v "$(PROJECT_DIR)":/home/root/project "docker.io/ipea7892/osf-hyoung-ffcws:pre-reg"
 
 run-demo:
     # run demo pipeline
 	podman run --rm \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project \
-		"docker.io/ipea7892/osf-hyoung-ffcws:latest" \
+		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
 	    bash -c 'R -e "devtools::document(); devtools::install(); osfHYoungFFCWS::run_demo_pipeline()"'
 
 website:
@@ -31,7 +31,7 @@ website:
 	podman run --rm \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project \
-		"docker.io/ipea7892/osf-hyoung-ffcws:latest" \
+		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
 		bash -c 'R -e "pkgdown::build_site()"'
 	@live-server docs/
 
@@ -41,7 +41,7 @@ pkg:
 	podman run --rm \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project \
-		"docker.io/ipea7892/osf-hyoung-ffcws:latest" \
+		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
 	    bash -c 'R -e "devtools::document(); devtools::install(); osfHYoungFFCWS::run_demo_pipeline()"'
 	rm Data-simulation-and-parameter-recovery-with-brms.*
 	rm _targets.R _targets.yaml
@@ -52,18 +52,32 @@ pkg:
 	podman run --rm \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project \
-		"docker.io/ipea7892/osf-hyoung-ffcws:latest" \
+		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
 		bash -c 'R -e "pkgdown::build_site()"'
 	@live-server docs/
 
 push:
 	git add . && git commit -m "deploy new version of the package" && git push 
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
-	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:latest \
+	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:pre-reg \
 		-f Containerfile .
 	sed -i 's/DUMMY-DATE--.*/-ANCHOR-"/' Containerfile
 	podman login docker.io
-	podman push docker.io/ipea7892/osf-hyoung-ffcws-dev
+	podman push docker.io/ipea7892/osf-hyoung-ffcws-dev:pre-reg
+
+build-gitpod:
+	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:gitpod \
+		-f Containerfile-gitpod .
+
+run-gitpod:
+	podman run --rm -it \
+	    -v "$(PROJECT_DIR)":/home/root/project "docker.io/ipea7892/osf-hyoung-ffcws:gitpod"
+
+push-gitpod:
+	podman login docker.io
+	podman push docker.io/ipea7892/osf-hyoung-ffcws:gitpod
+
+
 
 preview:
 	@live-server docs/
