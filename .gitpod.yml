@@ -1,1 +1,2 @@
-image: docker.io/ipea7892/osf-hyoung-ffcws-dev
+image:
+  file: .gitpod.Dockerfile

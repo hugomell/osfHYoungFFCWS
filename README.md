@@ -17,7 +17,7 @@ models in the pre-registration, (ii) attempts to recover the structural
 parameters used for the simulation by estimating path models with `{brms}`.
 Tables and plots obtained after running the demonstration pipeline can be
 found
-[here](/articles/Data-simulation-and-parameter-recovery-with-brms.html).
+[here](https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
 To ensure that the analysis pipeline is ***reproducible***, we detail in
 the next sections how to: (i) set up the computing environment with all the
@@ -89,7 +89,7 @@ session and type `exit` to leave and destroy the running container.
 ### Restoring R dependencies
 
 First, you need to copy the `renv.lock` located at the root of the github
-[repository](https://github.com/hugomell/osf-heloise-young-fragile-family) to
+[repository](https://github.com/hugomell/osfHYoungFFCWS) to
 your project folder.
 This is the file used by `{renv}` to record the exact versions of the R
 dependencies that need to be present to execute the code for the project.
@@ -126,13 +126,13 @@ used internally by `{targets}` to store the results of the computations. A
 `Data-simulation-and-parameter-recovery-with-brms.html` should also have been
 generated automatically from the R Markdown file. The same report is available
 as a `{pkgdown}`
-[article](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/Data-simulation-and-parameter-recovery-with-brms.html).
+[article](https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
 
 See the [Getting
-started](https://hugomell.github.io/osf-heloise-young-fragile-family/articles/osfHYoungFFCWS.html)
+started](https://hugomell.github.io/osfHYoungFFCWS/articles/osfHYoungFFCWS.html)
 as well as the
-[Reference](https://hugomell.github.io/osf-heloise-young-fragile-family/reference/index.html)
+[Reference](https://hugomell.github.io/osfHYoungFFCWS/reference/index.html)
 sections for more information on the functions used in the pipeline and ways
 to modify the default values for the simulation parameters and the models'
 priors.

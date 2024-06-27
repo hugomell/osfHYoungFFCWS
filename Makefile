@@ -8,7 +8,7 @@ build:
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
 	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:latest \
 		-f Containerfile .
-	sed -i "s/DUMMY-DATE--.*/-ANCHOR-/" Containerfile
+	sed -i 's/DUMMY-DATE--.*/-ANCHOR-"/' Containerfile
 
 run:
 	podman run --rm -it \
@@ -61,7 +61,7 @@ push:
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
 	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:latest \
 		-f Containerfile .
-	sed -i "s/DUMMY-DATE--.*/-ANCHOR-/" Containerfile
+	sed -i 's/DUMMY-DATE--.*/-ANCHOR-"/' Containerfile
 	podman login docker.io
 	podman push docker.io/ipea7892/osf-hyoung-ffcws-dev
 
