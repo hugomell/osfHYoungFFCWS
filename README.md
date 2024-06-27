@@ -42,9 +42,16 @@ pre-installed. This image is hosted on
 and is built upon the R images provided by the
 [Rocker project](https://rocker-project.org/).
 
-#### for linux users
+#### for linux users 
 
-Podman should be available from the package manager of most Linux
+Start by cloning this repository with:
+
+```bash
+git clone https://github.com/hugomell/osfHYoungFFCWS
+cd osfHYoungFFCWS
+```
+
+If Podman is not already available on your machine, it should be available from the package manager of most Linux
 distributions. Below is an example for Debian/Ubuntu, see the official
 [documentation](https://podman.io/docs/installation#installing-on-linux)
 for more examples.
