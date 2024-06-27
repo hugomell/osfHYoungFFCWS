@@ -4,7 +4,7 @@
 \alias{run_demo_pipeline}
 \title{Run demonstration pipeline}
 \usage{
-run_demo_pipeline()
+run_demo_pipeline(gitpod = FALSE)
 }
 \description{
 Run demonstration pipeline

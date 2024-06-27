@@ -22,25 +22,30 @@ Tables and plots obtained after running the demonstration pipeline can be
 found
 [here](https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 
-In the next section, we explain how to reproduce these results.
+To facilitate the reproduction of theses results, we provide in the next
+section instructions to re-run the demonstration pipeline in a dedicated
+computing environment with all dependencies pre-installed.
 
 
 ## Setting up the computing environment
 
 ### On a local machine
 
-We will use a dedicated container image that comes with R, RStudio,
-[Stan](https://mc-stan.org/) (used to fit the bayesian models) and all the
-required R packages.
+We will use [Podman](https://podman.io/) to run containers from a custom image
+that comes with R, RStudio, [Stan](https://mc-stan.org/) and all the required
+R packages. This image is hosted on [Dockerhub]() reuses
+those provided by the [Rocker project](https://rocker-project.org/). We use
+ to run the 
 
 #### for linux users
+
 
 ```bash
 # install podman for Debian/Ubuntu
 sudo apt install podman
 ```
 
-### for Windows users
+#### for Windows users
 
 
 
@@ -67,7 +72,7 @@ familiar to certain R users.
 
 ### Using the container image
 
-First, you will need a machine with [Podman](https://podman.io/) installed
+First, you will need a machine with  installed
 ([Docker](https://www.docker.com/) might also work but has not been properly
 tested). Instructions for the installation of Podman on various platforms can
 be found in their official

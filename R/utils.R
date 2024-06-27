@@ -13,7 +13,9 @@ setup_demo_pipeline <- function() {
 
 #' Run demonstration pipeline
 #' @export
-run_demo_pipeline <- function() {
-  setup_demo_pipeline()  
+run_demo_pipeline <- function(gitpod = FALSE) {
+  if (gitpod == FALSE) {
+    setup_demo_pipeline()  
+  }
   targets::tar_make()
 }
