@@ -23,4 +23,5 @@ RUN install2.r \
   "visNetwork" \
   "devtools"
 
+RUN echo "blabla"
 RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FALSE)"
