@@ -32,16 +32,20 @@ computing environment with all dependencies pre-installed.
 ### On a local machine
 
 We will use [Podman](https://podman.io/) to run containers from a custom image
-that comes with R, RStudio, [Stan](https://mc-stan.org/) and all the required
-R packages. This image is hosted on [Dockerhub]() reuses
-those provided by the [Rocker project](https://rocker-project.org/). We use
- to run the 
+that comes with R, RStudio, [Stan](https://mc-stan.org/) and all the R packages
+pre-installed. This image is hosted on
+[Dockerhub](https://hub.docker.com/repository/docker/ipea7892/osf-hyoung-ffcws/general)
+and is built upon the R images provided by the
+[Rocker project](https://rocker-project.org/).
 
 #### for linux users
 
+Podman should be available from the package manager of most Linux
+distributions. Below is an example for Debian/
+
 
 ```bash
-# install podman for Debian/Ubuntu
+# podman for Debian/Ubuntu
 sudo apt install podman
 ```
 

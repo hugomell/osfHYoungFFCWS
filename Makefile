@@ -63,7 +63,7 @@ push:
 		-f Containerfile .
 	sed -i 's/DUMMY-DATE--.*/-ANCHOR-"/' Containerfile
 	podman login docker.io
-	podman push docker.io/ipea7892/osf-hyoung-ffcws-dev:pre-reg
+	podman push docker.io/ipea7892/osf-hyoung-ffcws:pre-reg
 
 build-gitpod:
 	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:gitpod \
