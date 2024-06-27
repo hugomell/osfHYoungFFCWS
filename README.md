@@ -29,6 +29,10 @@ computing environment with all dependencies pre-installed.
 
 ## Setting up the computing environment
 
+### On a remote machine
+
+The easiest way to use the p
+
 ### On a local machine
 
 We will use [Podman](https://podman.io/) to run containers from a custom image
@@ -41,12 +45,20 @@ and is built upon the R images provided by the
 #### for linux users
 
 Podman should be available from the package manager of most Linux
-distributions. Below is an example for Debian/
-
+distributions. Below is an example for Debian/Ubuntu, see the official
+[documentation](https://podman.io/docs/installation#installing-on-linux)
+for more examples.
 
 ```bash
 # podman for Debian/Ubuntu
 sudo apt install podman
+```
+
+Once Podman is installed on your local machine, you can run a container from
+the custom image with the following command:
+
+```bash
+
 ```
 
 #### for Windows users
@@ -54,7 +66,6 @@ sudo apt install podman
 
 
 
-### On a remote machine
 
 
 
