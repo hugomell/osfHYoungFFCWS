@@ -1,2 +1,1 @@
-image:
-  file: docker.io/ipea7892/osf-hyoung-ffcws:gitpod
+image: docker.io/ipea7892/osf-hyoung-ffcws:gitpod
