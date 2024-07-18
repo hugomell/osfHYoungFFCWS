@@ -73,39 +73,46 @@
 <h2 id="setting-up-the-computing-environment">Setting up the computing environment<a class="anchor" aria-label="anchor" href="#setting-up-the-computing-environment"></a>
 </h2>
 <div class="section level3">
+<h3 id="on-a-remote-machine">On a remote machine<a class="anchor" aria-label="anchor" href="#on-a-remote-machine"></a>
+</h3>
+<p>The easiest way to run the demonstration pipeline is by using a Gitpod workspace.</p>
+</div>
+<div class="section level3">
 <h3 id="on-a-local-machine">On a local machine<a class="anchor" aria-label="anchor" href="#on-a-local-machine"></a>
 </h3>
-<p>We will use <a href="https://podman.io/" class="external-link">Podman</a> to run containers from a custom image that comes with R, RStudio, <a href="https://mc-stan.org/" class="external-link">Stan</a> and all the required R packages. This image is hosted on <a href="">Dockerhub</a> reuses those provided by the <a href="XXX">Rocker project</a>. We use to run the</p>
+<p>We will use <a href="https://podman.io/" class="external-link">Podman</a> to run containers from a custom image that comes with R, RStudio, <a href="https://mc-stan.org/" class="external-link">Stan</a> and all the R packages pre-installed. This image is hosted on <a href="https://hub.docker.com/repository/docker/ipea7892/osf-hyoung-ffcws/general" class="external-link">Dockerhub</a> and is built upon the R images provided by the <a href="https://rocker-project.org/" class="external-link">Rocker project</a>.</p>
 <div class="section level4">
 <h4 id="for-linux-users">for linux users<a class="anchor" aria-label="anchor" href="#for-linux-users"></a>
 </h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># install podman for Debian/Ubuntu</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">sudo</span> apt install podman</span></code></pre></div>
+<p>Start by cloning this repository with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hugomell/osfHYoungFFCWS</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="bu">cd</span> osfHYoungFFCWS</span></code></pre></div>
+<p>If Podman is not already available on your machine, it should be available from the package manager of most Linux distributions. Below is an example for Debian/Ubuntu, see the official <a href="https://podman.io/docs/installation#installing-on-linux" class="external-link">documentation</a> for more examples.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># podman for Debian/Ubuntu</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">sudo</span> apt install podman</span></code></pre></div>
+<p>Once Podman is installed on your local machine, you can run a container from the custom image with the following command:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="for-windows-users">for Windows users<a class="anchor" aria-label="anchor" href="#for-windows-users"></a>
 </h4>
-</div>
-</div>
-<div class="section level3">
-<h3 id="on-a-remote-machine">On a remote machine<a class="anchor" aria-label="anchor" href="#on-a-remote-machine"></a>
-</h3>
 <p>on a new machine. The first strategy uses a container image to generate on demand <em>virtualized</em> computing environments isolated from the rest of the host machine and with all the tools necessary to run the pipeline pre-installed. The second strategy uses <a href="https://rstudio.github.io/renv/articles/renv.html" class="external-link"><code>{renv}</code></a> to create a project local library with the appropriate versions of the R dependencies.</p>
 <p>The second strategy is less reproducible since the R installation and the system dependencies will need to be managed by the user. For instance, the installation of the <code>Stan</code> probabilistic programming language used by <a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a> to fit path models using bayesian estimation procedures is not recorded by <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> and will need to be performed in a separate step. Nevertheless, it has the advantage that it does not require the installation and use of specialized software for launching and managing containers, which might not be familiar to certain R users.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="using-the-container-image">Using the container image<a class="anchor" aria-label="anchor" href="#using-the-container-image"></a>
 </h3>
 <p>First, you will need a machine with installed (<a href="https://www.docker.com/" class="external-link">Docker</a> might also work but has not been properly tested). Instructions for the installation of Podman on various platforms can be found in their official <a href="https://podman.io/docs/installation" class="external-link">documentation</a>.</p>
 <p>In a terminal, you can then execute the following podman command which will <em>pull</em> the container image on your local machine:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">podman</span> pull docker.io/ipea7892/osf-hyoung-ffcws-dev:latest </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">podman</span> pull docker.io/ipea7892/osf-hyoung-ffcws-dev:latest </span></code></pre></div>
 <p>Once the image has been downloaded, to launch a container:</p>
 <ol style="list-style-type: decimal">
 <li><p>Open a terminal in your project directory</p></li>
 <li><p>Copy/paste the following command in the terminal:</p></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">podman</span> run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">-e</span> DISABLE_AUTH=true <span class="at">-p</span> 127.0.0.1:8787:8787 <span class="dt">\</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>       <span class="at">-v</span> <span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span>:/home/root/project <span class="st">"osf-hyoung-ffcws-dev:latest"</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">podman</span> run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">-e</span> DISABLE_AUTH=true <span class="at">-p</span> 127.0.0.1:8787:8787 <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>       <span class="at">-v</span> <span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span>:/home/root/project <span class="st">"osf-hyoung-ffcws-dev:latest"</span></span></code></pre></div>
 <p>This will create a container based on the container image you just pulled and will automatically start an RStudio server session from within the container.</p>
 <ol start="3" style="list-style-type: decimal">
 <li>

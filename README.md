@@ -31,7 +31,8 @@ computing environment with all dependencies pre-installed.
 
 ### On a remote machine
 
-The easiest way to use the p
+The easiest way to run the demonstration pipeline is by using a Gitpod
+workspace.
 
 ### On a local machine
 
@@ -51,10 +52,11 @@ git clone https://github.com/hugomell/osfHYoungFFCWS
 cd osfHYoungFFCWS
 ```
 
-If Podman is not already available on your machine, it should be available from the package manager of most Linux
-distributions. Below is an example for Debian/Ubuntu, see the official
-[documentation](https://podman.io/docs/installation#installing-on-linux)
-for more examples.
+If Podman is not already available on your machine, it should be available
+from the package manager of most Linux distributions. Below is an example for
+Debian/Ubuntu, see the official
+[documentation](https://podman.io/docs/installation#installing-on-linux) for
+more examples.
 
 ```bash
 # podman for Debian/Ubuntu

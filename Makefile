@@ -15,34 +15,13 @@ run:
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project "docker.io/ipea7892/osf-hyoung-ffcws:pre-reg"
 
-run-demo:
-    # run demo pipeline
-	podman run --rm \
-	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
-	    -v "$(PROJECT_DIR)":/home/root/project \
-		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
-	    bash -c 'R -e "devtools::document(); devtools::install(); osfHYoungFFCWS::run_demo_pipeline()"'
-
-website:
-    # project package update
-	rm -rf docs/
-	cp inst/Data-simulation-and-parameter-recovery-with-brms.Rmd \
-        vignettes/articles/Data-simulation-and-parameter-recovery-with-brms.Rmd
-	podman run --rm \
-	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
-	    -v "$(PROJECT_DIR)":/home/root/project \
-		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
-		bash -c 'R -e "pkgdown::build_site()"'
-	@live-server docs/
-
-
 pkg:
     # run demo pipeline
 	podman run --rm \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project \
 		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
-	    bash -c 'R -e "devtools::document(); devtools::install(); osfHYoungFFCWS::run_demo_pipeline()"'
+	    bash -c 'R -e "devtools::document(); devtools::install(upgrade = FALSE); osfHYoungFFCWS::run_demo_pipeline()"'
 	rm Data-simulation-and-parameter-recovery-with-brms.*
 	rm _targets.R _targets.yaml
     # project package update
@@ -54,10 +33,9 @@ pkg:
 	    -v "$(PROJECT_DIR)":/home/root/project \
 		"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg" \
 		bash -c 'R -e "pkgdown::build_site()"'
-	@live-server docs/
 
 push:
-	git add . && git commit -m "deploy new version of the package" && git push 
+	git push 
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
 	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:pre-reg \
 		-f Containerfile .
