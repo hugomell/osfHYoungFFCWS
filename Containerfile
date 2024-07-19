@@ -28,5 +28,5 @@ RUN /container-scripts/install_stan.sh
 
 # install project package
 RUN R -e "renv::install('devtools')"
-RUN echo "DUMMY-DATE-- Fri Jul 19 15:14:36 CEST 2024"
+RUN echo "-ANCHOR-"
 RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FALSE)"

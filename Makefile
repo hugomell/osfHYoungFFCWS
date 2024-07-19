@@ -2,7 +2,7 @@ PROJECT_DIR = $(shell echo ${PWD})
 DATE = $(shell date)
 STR_DATE = DUMMY-DATE-- $(DATE)
 
-.PHONY: all build pkg run 
+.PHONY: build clean pkg run 
 
 build:
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
@@ -14,7 +14,6 @@ run:
 	podman run --rm -it \
 	    -e DISABLE_AUTH=true -p 127.0.0.1:8787:8787 \
 	    -v "$(PROJECT_DIR)":/home/root/project "docker.io/ipea7892/osf-hyoung-ffcws:pre-reg"
-
 pkg:
     # run demo pipeline
 	podman run --rm \
@@ -43,6 +42,12 @@ push:
 	podman login docker.io
 	podman push docker.io/ipea7892/osf-hyoung-ffcws:pre-reg
 
+clean:
+	rm _targets.R _targets.yaml Data-simulation-and-parameter-recovery-with-brms*
+
+preview:
+	@live-server docs/
+
 build-gitpod:
 	podman build --pull=false -t docker.io/ipea7892/osf-hyoung-ffcws:gitpod \
 		-f Containerfile-gitpod .
@@ -57,5 +62,3 @@ push-gitpod:
 
 
 
-preview:
-	@live-server docs/
