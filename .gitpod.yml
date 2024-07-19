@@ -1,4 +1,6 @@
-image: docker.io/ipea7892/osf-hyoung-ffcws:gitpod
+image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg
 tasks:
+    - name: Copy renv files
+      command: cp /home/root/project/renv* /home/root/project/.Rprofile .
     - name: Launch R console
       command: R
