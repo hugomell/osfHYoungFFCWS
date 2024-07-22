@@ -2,5 +2,10 @@ image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg
 tasks:
     - name: Copy renv files
       command: cp -r /home/root/project/renv* /home/root/project/.Rprofile .
-    - name: Launch R console
-      command: R
+    - name: configure RStudio project folder
+      command: echo 'session-default-working-dir=/workspace/osfHYoungFFCWS' >> \
+               /etc/rstudio/rsession.conf && \
+               echo 'session-default-new-project-dir=/workspace/osfHYoungFFCWS' >> \
+               /etc/rstudio/rsession.conf
+    - name: Launch RStudio server
+      command: sudo rstudio-server --auth-none 1 start
