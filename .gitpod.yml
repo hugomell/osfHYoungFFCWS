@@ -2,10 +2,9 @@ image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg
 tasks:
     - name: Copy renv files
       command: cp -r /home/root/project/renv* /home/root/project/.Rprofile .
-    - name: configure RStudio project folder
-      command: echo 'session-default-working-dir=/workspace/osfHYoungFFCWS' >> \
-               /etc/rstudio/rsession.conf && \
-               echo 'session-default-new-project-dir=/workspace/osfHYoungFFCWS' >> \
-               /etc/rstudio/rsession.conf
+    - name: Disable authentification for RStudio login
+      command: cp /etc/rstudio/rserver.conf /etc/rstudio/disable_auth_rserver.conf && echo "auth-none=1" >> /etc/rstudio/disable_auth_rserver.conf
     - name: Launch RStudio server
-      command: sudo rstudio-server --auth-none 1 start
+      command: sudo rstudio-server start
+    - name: Launch R console
+      command: R
