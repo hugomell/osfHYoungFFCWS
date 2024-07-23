@@ -38,6 +38,7 @@ RUN echo 'session-default-working-dir=/home/root/project' >> \
       /etc/rstudio/rsession.conf
 
 FROM base AS target-gitpod
+ENV DISABLE_AUTH true
 RUN echo "RENV_PATHS_LIBRARY=/home/root/renv/library" >> /usr/local/lib/R/etc/Renviron
 RUN echo 'session-default-working-dir=/workspace/osfHYoungFFCWS' >> \
       /etc/rstudio/rsession.conf && \
