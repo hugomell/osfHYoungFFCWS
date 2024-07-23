@@ -1,12 +1,8 @@
+ARG target
+
 FROM docker.io/rocker/rstudio:4.4.1 AS base
 
 WORKDIR /home/root/project
-
-RUN echo 'session-default-working-dir=/home/root/project' >> \
-    /etc/rstudio/rsession.conf && \
-    echo 'session-default-new-project-dir=/home/root/project' >> \
-    /etc/rstudio/rsession.conf
-
 
 # {renv} - restore project library
 RUN mkdir -p renv
@@ -32,4 +28,22 @@ RUN echo "-ANCHOR-"
 RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FALSE)"
 
 # copy package files to project library
-RUN R -e "renv::isolate()
+RUN R -e "renv::isolate()"
+
+
+# Multi-stage builds for different RStudio server configurations
+FROM base AS target-local
+RUN echo 'session-default-working-dir=/home/root/project' >> \
+      /etc/rstudio/rsession.conf && \
+    echo 'session-default-new-project-dir=/home/root/project' >> \
+      /etc/rstudio/rsession.conf
+
+FROM base AS target-gitpod
+RUN echo 'session-default-working-dir=/workspace/osfHYoungFFCWS' >> \
+      /etc/rstudio/rsession.conf && \
+    echo 'session-default-new-project-dir=/workspace/osfHYoungFFCWS' >> \
+      /etc/rstudio/rsession.conf
+
+FROM target-${target} AS final
+ARG target
+RUN echo Successfully built $target image!
