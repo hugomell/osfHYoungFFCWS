@@ -3,6 +3,6 @@ tasks:
     - name: Copy renv files
       command: cp -r /home/root/project/renv* /home/root/project/.Rprofile .
     - name: Launch RStudio server
-      command: sudo rstudio-server start
+      command: sudo --preserve-env=RENV_PATHS_LIBRARY rstudio-server start
     - name: Launch R console
       command: R
