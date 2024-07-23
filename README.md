@@ -159,6 +159,10 @@ the packages should be available.
 
 ## Running the demonstration pipeline
 
+<a href="https://gitpod.io/#https://github.com/hugomell/osfHYoungFFCWS/tree/gitpod" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/95fbab4ac41e62a9f66e6d1d78f8249c418b33f8c7739c4f9c593f953f5362de/68747470733a2f2f676974706f642e696f2f627574746f6e2f6f70656e2d696e2d676974706f642e737667" alt="Open in Gitpod" data-canonical-src="https://gitpod.io/button/open-in-gitpod.svg" style="max-width: 100%;">
+</a>
+
 
 The analysis pipeline is managed using the R package `{targets}`.
 
