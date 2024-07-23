@@ -30,7 +30,6 @@ RUN R -e "devtools::install_github('hugomell/osfHYoungFFCWS', dependencies = FAL
 # copy package files to project library
 RUN R -e "renv::isolate()"
 
-
 # Multi-stage builds for different RStudio server configurations
 FROM base AS target-local
 RUN echo 'session-default-working-dir=/home/root/project' >> \
@@ -39,6 +38,7 @@ RUN echo 'session-default-working-dir=/home/root/project' >> \
       /etc/rstudio/rsession.conf
 
 FROM base AS target-gitpod
+RUN echo "RENV_PATHS_LIBRARY=/home/root/renv/library" >> /usr/local/lib/R/etc/Renviron
 RUN echo 'session-default-working-dir=/workspace/osfHYoungFFCWS' >> \
       /etc/rstudio/rsession.conf && \
     echo 'session-default-new-project-dir=/workspace/osfHYoungFFCWS' >> \
