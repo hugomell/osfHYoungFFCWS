@@ -2,7 +2,9 @@ image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg-gitpod
 tasks:
     - name: Copy renv files
       command: cp -r /home/root/project/renv* /home/root/project/.Rprofile .
+    - name: Fix renv library path for rstudio
+      command: echo "renv::settings$external.libraries = c('/home/root/renv/library')"
     - name: Launch RStudio server
-      command: sudo --preserve-env=RENV_PATHS_LIBRARY rstudio-server start
+      command: sudo rstudio-server start
     - name: Launch R console
       command: R
