@@ -2,6 +2,8 @@ image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg-gitpod
 tasks:
     - name: Copy renv files
       command: cp -r /home/root/project/renv* /home/root/project/.Rprofile .
+    - name: Give read, write, exec permissions to all users
+      command: sudo chmod -R 777 /workspace/osfHYoungFFCWS
     - name: Launch RStudio server
       command: sudo rstudio-server start
     - name: Launch R console
