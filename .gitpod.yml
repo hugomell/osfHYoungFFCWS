@@ -1,9 +1,7 @@
-image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg
+image: docker.io/ipea7892/osf-hyoung-ffcws:pre-reg-gitpod
 tasks:
     - name: Copy renv files
       command: cp -r /home/root/project/renv* /home/root/project/.Rprofile .
-    - name: Disable authentification for RStudio login
-      command: cp /etc/rstudio/rserver.conf /etc/rstudio/disable_auth_rserver.conf && echo "auth-none=1" >> /etc/rstudio/disable_auth_rserver.conf
     - name: Launch RStudio server
       command: sudo rstudio-server start
     - name: Launch R console
