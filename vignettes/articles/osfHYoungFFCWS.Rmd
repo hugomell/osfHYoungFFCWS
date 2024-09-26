@@ -1,4 +1,4 @@
----
+
 title: "osf-demo-pipeline"
 ---
 
@@ -13,11 +13,11 @@ knitr::opts_chunk$set(
 Below we provide an overview of the main functions from this package that are
 used in the demonstration pipeline. To see the output of the demonstration
 pipeline refer to this
-[article](/articles/Data-simulation-and-parameter-recovery-with-brms.html).
+[article](https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html).
 Recall also from the instructions in the
-[README](/index.html)
-that the files that define the `targets` pipeline can be obtained with
-`osfHYoungFFCWS::gen_targets_script()`.
+[README](https://hugomell.github.io/osfHYoungFFCWS/)
+to see how to access a computing environment with the package and its
+dependencies installed.
 
 We start by loading the package into our R environment:
 
@@ -116,6 +116,6 @@ The graphs created by `plot_posteriors()` will show in addition to the
 posterior distribution the target value used in the simulation as a vertical
 line, as well as the mean of the posterior (black dot), 66% and 95% credible
 intervals (black horizontal segments). See the
-[article](/articles/Data-simulation-and-parameter-recovery-with-brms.html)
+[article](https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html)
 with the output of the demonstration pipeline for examples.
 

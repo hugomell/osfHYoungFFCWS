@@ -91,6 +91,77 @@ plot_posteriors(mod_baseline, "externalizing", model_type = "baseline",
 
 
 
+## Moderation model
+
+
+
+### Data simulation
+
+**Formulas used for data simulation with `lavaan::simulateData()`:**
+
+```{r}
+gen_model_formula(model_type = "moderation")
+```
+
+**Histograms for the simulated dataset:**
+
+```{r}
+#| message: false
+
+df_moderation <- targets::tar_read(sim_data_moderation)
+hist_sim(df_moderation)
+```
+
+
+### Recovery of model parameters
+
+#### Mean estimates
+
+```{r}
+mod_moderation <- targets::tar_read(fit_moderation)
+check_params_recovery(mod_moderation, model_type = "moderation") |>
+    flextable::flextable() |>
+    flextable::set_header_labels(values = list(
+        Estimate = "mean estimate",
+        simu = "simulation coefficient"
+    )) |>
+    flextable::set_caption("Estimated regression coefficients compared to
+                            the values used for the simulation.") |>
+    flextable::width(width = 2.5)
+```
+
+#### Posterior distributions
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_moderation, "std", model_type = "moderation",
+    plot_title = "Moderation model - predictors of short-term deliberation")
+```
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_moderation, "repro", model_type = "moderation",
+    plot_title = "Moderation model - predictors of reproductive effort")
+```
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_moderation, "internalizing", model_type = "moderation",
+    plot_title = "Moderation model - predictors of internalizing symptoms")
+```
+
+```{r}
+#| warning: false
+
+plot_posteriors(mod_moderation, "externalizing", model_type = "moderation",
+    plot_title = "Moderation model - predictors of externalizing symptoms")
+```
+
+
+
 ## Mediation model
 
 
@@ -163,71 +234,3 @@ plot_posteriors(mod_mediation, "externalizing", model_type = "mediation",
 
 
 
-## Moderation model
-
-
-
-### Data simulation
-
-**Formulas used for data simulation with `lavaan::simulateData()`:**
-
-```{r}
-gen_model_formula(model_type = "moderation")
-```
-
-**Histograms for the simulated dataset:**
-
-```{r}
-#| message: false
-
-df_moderation <- targets::tar_read(sim_data_moderation)
-hist_sim(df_moderation)
-```
-
-
-### Recovery of model parameters
-
-#### Mean estimates
-
-```{r}
-mod_moderation <- targets::tar_read(fit_moderation)
-check_params_recovery(mod_moderation, model_type = "moderation") |>
-    flextable::flextable() |>
-    flextable::set_header_labels(values = list(
-        Estimate = "mean estimate",
-        simu = "simulation coefficient"
-    )) |>
-    flextable::set_caption("Estimated regression coefficients compared to
-                            the values used for the simulation.") |>
-    flextable::width(width = 2.5)
-```
-
-#### Posterior distributions
-
-```{r}
-#| warning: false
-
-plot_posteriors(mod_moderation, "std", model_type = "moderation",
-    plot_title = "Moderation model - predictors of short-term deliberation")
-```
-
-```{r}
-#| warning: false
-
-plot_posteriors(mod_moderation, "repro", model_type = "moderation",
-    plot_title = "Moderation model - predictors of reproductive effort")
-```
-
-```{r}
-#| warning: false
-
-plot_posteriors(mod_moderation, "internalizing", model_type = "moderation",
-    plot_title = "Moderation model - predictors of internalizing symptoms")
-```
-
-```{r}
-#| warning: false
-
-plot_posteriors(mod_moderation, "externalizing", model_type = "moderation",
-    plot_title = "Moderation model - predictors of externalizing symptoms")
-```

@@ -62,89 +62,67 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="code-and-dependencies-to-run-the-demonstration-pipeline">Code and dependencies to run the demonstration pipeline<a class="anchor" aria-label="anchor" href="#code-and-dependencies-to-run-the-demonstration-pipeline"></a>
 </h1></div>
-<p>This repository is a companion to an <a href="https://osf.io/nck3m/" class="external-link">OSF pre-registration</a>. It is organized as an R package and can be installed with:</p>
+<p>This repository is a companion to an <a href="https://osf.io/ygbsu" class="external-link">OSF pre-registration</a>. It is organized as an R package and can be installed with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"hugomell/osfHYoungFFCWS"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>It provides R code and instructions to run a demonstration pipeline that: 1. simulates fake datasets based on the equations described for the three main models in the pre-registration 2. attempts to recover the structural parameters used for the simulation by estimating path models with <a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a></p>
-<p>Tables and plots obtained after running the demonstration pipeline can be found <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html">here</a>.</p>
-<p>To facilitate the reproduction of theses results, we provide in the next section instructions to re-run the demonstration pipeline in a dedicated computing environment with all dependencies pre-installed.</p>
-<div class="section level2">
-<h2 id="setting-up-the-computing-environment">Setting up the computing environment<a class="anchor" aria-label="anchor" href="#setting-up-the-computing-environment"></a>
-</h2>
-<div class="section level3">
-<h3 id="on-a-remote-machine">On a remote machine<a class="anchor" aria-label="anchor" href="#on-a-remote-machine"></a>
-</h3>
-<p>The easiest way to run the demonstration pipeline is by using a Gitpod workspace.</p>
-</div>
-<div class="section level3">
-<h3 id="on-a-local-machine">On a local machine<a class="anchor" aria-label="anchor" href="#on-a-local-machine"></a>
-</h3>
-<p>We will use <a href="https://podman.io/" class="external-link">Podman</a> to run containers from a custom image that comes with R, RStudio, <a href="https://mc-stan.org/" class="external-link">Stan</a> and all the R packages pre-installed. This image is hosted on <a href="https://hub.docker.com/repository/docker/ipea7892/osf-hyoung-ffcws/general" class="external-link">Dockerhub</a> and is built upon the R images provided by the <a href="https://rocker-project.org/" class="external-link">Rocker project</a>.</p>
-<div class="section level4">
-<h4 id="for-linux-users">for linux users<a class="anchor" aria-label="anchor" href="#for-linux-users"></a>
-</h4>
-<p>Start by cloning this repository with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hugomell/osfHYoungFFCWS</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="bu">cd</span> osfHYoungFFCWS</span></code></pre></div>
-<p>If Podman is not already available on your machine, it should be available from the package manager of most Linux distributions. Below is an example for Debian/Ubuntu, see the official <a href="https://podman.io/docs/installation#installing-on-linux" class="external-link">documentation</a> for more examples.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># podman for Debian/Ubuntu</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">sudo</span> apt install podman</span></code></pre></div>
-<p>Once Podman is installed on your local machine, you can run a container from the custom image with the following command:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="for-windows-users">for Windows users<a class="anchor" aria-label="anchor" href="#for-windows-users"></a>
-</h4>
-<p>on a new machine. The first strategy uses a container image to generate on demand <em>virtualized</em> computing environments isolated from the rest of the host machine and with all the tools necessary to run the pipeline pre-installed. The second strategy uses <a href="https://rstudio.github.io/renv/articles/renv.html" class="external-link"><code>{renv}</code></a> to create a project local library with the appropriate versions of the R dependencies.</p>
-<p>The second strategy is less reproducible since the R installation and the system dependencies will need to be managed by the user. For instance, the installation of the <code>Stan</code> probabilistic programming language used by <a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a> to fit path models using bayesian estimation procedures is not recorded by <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> and will need to be performed in a separate step. Nevertheless, it has the advantage that it does not require the installation and use of specialized software for launching and managing containers, which might not be familiar to certain R users.</p>
-</div>
-</div>
-<div class="section level3">
-<h3 id="using-the-container-image">Using the container image<a class="anchor" aria-label="anchor" href="#using-the-container-image"></a>
-</h3>
-<p>First, you will need a machine with installed (<a href="https://www.docker.com/" class="external-link">Docker</a> might also work but has not been properly tested). Instructions for the installation of Podman on various platforms can be found in their official <a href="https://podman.io/docs/installation" class="external-link">documentation</a>.</p>
-<p>In a terminal, you can then execute the following podman command which will <em>pull</em> the container image on your local machine:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">podman</span> pull docker.io/ipea7892/osf-hyoung-ffcws-dev:latest </span></code></pre></div>
-<p>Once the image has been downloaded, to launch a container:</p>
+<p>It provides R code to run a demonstration pipeline that:</p>
 <ol style="list-style-type: decimal">
-<li><p>Open a terminal in your project directory</p></li>
-<li><p>Copy/paste the following command in the terminal:</p></li>
+<li><p>simulates fake datasets based on the equations for the three models described in the pre-registration</p></li>
+<li><p>recovers the simulations’ structural parameters with bayesian estimation using the <a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a> package</p></li>
+<li><p>generates an HTML report with lavaan syntax for the models used to generate fake data, histograms of the simulated variables, tables and posterior distributions for regression coefficients</p></li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">podman</span> run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">-e</span> DISABLE_AUTH=true <span class="at">-p</span> 127.0.0.1:8787:8787 <span class="dt">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>       <span class="at">-v</span> <span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span>:/home/root/project <span class="st">"osf-hyoung-ffcws-dev:latest"</span></span></code></pre></div>
-<p>This will create a container based on the container image you just pulled and will automatically start an RStudio server session from within the container.</p>
-<ol start="3" style="list-style-type: decimal">
-<li>
-<p>Open a web browser and type <code>localhost:8787</code> in your address bar.</p>
-<p>Now you will be connected to the RStudio session that is running from the container. You will have access to the files in your project directory and to all the packages used by the demonstration pipeline.</p>
-</li>
-</ol>
-<p>To stop the container press <code>Ctrl-c</code> in the terminal to close the RStudio session and type <code>exit</code> to leave and destroy the running container.</p>
+<p>The report produced at the end of the pipeline is available as a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>. on the package’s website.</p>
+<p>In the next section, we explain how to run the pipeline in a isolated container with all the required software dependencies already installed, either remotely (using <a href="https://gitpod.io" class="external-link">Gitpod</a>), or locally (using <a href="https://podman.io/" class="external-link">Podman</a>). In both cases, the container image used built upon the container images provided by the <a href="https://rocker-project.org/" class="external-link">Rocker project</a>.</p>
+<div class="section level2">
+<h2 id="running-the-pipeline-inside-a-container">Running the pipeline inside a container<a class="anchor" aria-label="anchor" href="#running-the-pipeline-inside-a-container"></a>
+</h2>
+<div class="section level3">
+<h3 id="remotely-using-gitpod">Remotely using Gitpod<a class="anchor" aria-label="anchor" href="#remotely-using-gitpod"></a>
+</h3>
+<p><a href="https://gitpod.io/#https://github.com/hugomell/osfHYoungFFCWS/tree/gitpod" class="external-link"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod"></a></p>
+<p>Clicking on the above button will launch a Gitpod workspace with a running container from the custom image built for this project. Note that a free Gitpod account is needed to create and use workspaces up to 50 hours per month. Users with Github accounts will be able to sign in using the same credentials (see demonstration GIFs).</p>
+<p>Once the workspace has been created (this can take a few minutes), an RStudio session can be accessed from port <code>8787</code> (<code>rstudio</code> should be used both as the default user id and password in the authentification portal).</p>
+<p>To run the pipeline, execute in the R console:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">osfHYoungFFCWS</span><span class="fu">::</span><span class="fu"><a href="reference/run_demo_pipeline.html">run_demo_pipeline</a></span><span class="op">(</span>gitpod <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Once the pipeline exits (after a few minutes), the file <code>Data-simulation-and-parameter-recovery-with-brms.html</code> should appear in the file explorer pannel. Just open the file in the browser to preview the report. The same report is available as a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>.</p>
+<p>The demonstration GIFs below illustrate the different steps:</p>
+<p><em>Accessing the Gitpod workspace</em> <img src="assets/img/gitpod-workflow.gif" alt="open gitpod workspace"></p>
+<p><em>Acessing RStudio and running the demonstration pipeline</em> <img src="assets/img/gitpod-workflow2.gif" alt="steps to run the demonstration pipeline"></p>
+<p><em>View and download the R Markdown report</em> <img src="assets/img/gitpod-workflow3.gif" alt="steps to run the demonstration pipeline"></p>
 </div>
 <div class="section level3">
-<h3 id="using-renv">Using <code>{renv}</code>
-<a class="anchor" aria-label="anchor" href="#using-renv"></a>
+<h3 id="locally-using-podman">Locally using Podman<a class="anchor" aria-label="anchor" href="#locally-using-podman"></a>
 </h3>
+<p><strong><em>NB: Users with recent Mac computers (manufactured since late 2020) using Apple silicon processors are encouraged to use the Gitpod solution explained in the previous section, as they may encounter errors following the instructions below.</em></strong></p>
+<p>First, you will need a machine with Podman installed (<a href="https://www.docker.com/" class="external-link">Docker</a> might also work but has not been properly tested). Instructions for the installation of Podman on various platforms can be found in their official <a href="https://podman.io/docs/installation" class="external-link">documentation</a>.</p>
+<p>As an example, for Debian/Ubuntu linux users or for Windows users that run these linux distributions using <a href="https://learn.microsoft.com/en-us/windows/wsl/install" class="external-link">Windows Subsystem for Linux</a>, installing Podman is done by running in a terminal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">sudo</span> apt install podman</span></code></pre></div>
+<p>To run a container from the custom image built for this project, first open a terminal and execute the following command:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">podman</span> pull docker.io/ipea7892/osf-hyoung-ffcws:pre-reg</span></code></pre></div>
+<p>This command will <em>pull</em> on the local machine the container image that is hosted on <a href="https://hub.docker.com/repository/docker/ipea7892/osf-hyoung-ffcws/pre-reg" class="external-link">Dockerhub</a>. This step is only necessary the first time we want to run the container.</p>
+<p>Once the container image has been pulled, run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">podman</span> run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">-e</span> DISABLE_AUTH=true <span class="at">-p</span> 127.0.0.1:8787:8787 <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>       <span class="at">-v</span> <span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span>:/home/root/project <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>       <span class="st">"docker.io/ipea7892/osf-hyoung-ffcws:pre-reg"</span></span></code></pre></div>
+<p>A container will be launched from the image with R, RStudio, <a href="https://mc-stan.org/" class="external-link">Stan</a> and all the required R packages already installed.</p>
+<p>On startup, the current directory will be binded to the container so that reading, modifying or adding files to it is allowed. An RStudio server will be launched and to access the associated RStudio session, open a browser at <code>http://localhost:8787</code>.</p>
+<p>Now, the pipeline can be run with:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">osfHYoungFFCWS</span><span class="fu">::</span><span class="fu"><a href="reference/run_demo_pipeline.html">run_demo_pipeline</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Once the pipeline exits (after a few minutes), the file <code>Data-simulation-and-parameter-recovery-with-brms.html</code> should have been written to the project directory. Open it in a browser to see the report. The same report is available as a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>.</p>
+<p>To stop the container, press <code>Ctrl-c</code> in the terminal to close the RStudio session and shutdown the RStudio server.</p>
+<p>The demonstration GIFs below illustrates the entire process:</p>
+<div class="float">
+<img src="./assets/img/podman-workflow.gif" alt="steps to run container with podman"><div class="figcaption">steps to run container with podman</div>
 </div>
-<div class="section level3">
-<h3 id="restoring-r-dependencies">Restoring R dependencies<a class="anchor" aria-label="anchor" href="#restoring-r-dependencies"></a>
-</h3>
-<p>First, you need to copy the <code>renv.lock</code> located at the root of the github <a href="https://github.com/hugomell/osfHYoungFFCWS" class="external-link">repository</a> to your project folder. This is the file used by <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> to record the exact versions of the R dependencies that need to be present to execute the code for the project.</p>
-<p>If you do not already have <code>renv</code> installed on your machine, run <code>install.packages("renv")</code>.</p>
-<p>Then, to restore the computing environment run <code><a href="https://rstudio.github.io/renv/reference/init.html" class="external-link">renv::init()</a></code> and select the <code>Restore the project from the lockfile</code> option. This will install all the necessary R packages in a new <code>renv/</code> folder at the root of your project.</p>
-<p>Now, the next time we open RStudio or an R console from the root of our project directory the <code>renv</code> environment will be automatically loaded and all the packages should be available.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="running-the-demonstration-pipeline">Running the demonstration pipeline<a class="anchor" aria-label="anchor" href="#running-the-demonstration-pipeline"></a>
+<h2 id="go-further">Go further<a class="anchor" aria-label="anchor" href="#go-further"></a>
 </h2>
-<p><a href="https://gitpod.io/#https://github.com/hugomell/osfHYoungFFCWS/tree/gitpod" rel="nofollow" class="external-link"> <img src="https://camo.githubusercontent.com/95fbab4ac41e62a9f66e6d1d78f8249c418b33f8c7739c4f9c593f953f5362de/68747470733a2f2f676974706f642e696f2f627574746f6e2f6f70656e2d696e2d676974706f642e737667" alt="Open in Gitpod" data-canonical-src="https://gitpod.io/button/open-in-gitpod.svg" style="max-width: 100%;"></a></p>
-<p>The analysis pipeline is managed using the R package <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>.</p>
-<p>To execute the pipeline on your machine, you first need to run <code>osfHYoungFFCWS::get_targets_files()</code> from an R environnement with our package installed. This will copy two files to the root of your working directory: <code>_targets.R</code> and <code>Data-simulation-and-parameter-recovery-with-brms.Rmd</code>. The former defines all the steps of our pipeline and the later is an R Markdown file used to generate an HTML report with tables and plots.</p>
-<p>Then, simply execute <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html" class="external-link">targets::tar_make()</a></code> which will run the pipeline. This command will create at the root of the working directory a <code>_targets/</code> folder used internally by <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a> to store the results of the computations. A <code>Data-simulation-and-parameter-recovery-with-brms.html</code> should also have been generated automatically from the R Markdown file. The same report is available as a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/Data-simulation-and-parameter-recovery-with-brms.html">article</a>.</p>
-<p>See the <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/osfHYoungFFCWS.html">Getting started</a> as well as the <a href="https://hugomell.github.io/osfHYoungFFCWS/reference/index.html">Reference</a> sections for more information on the functions used in the pipeline and ways to modify the default values for the simulation parameters and the models’ priors.</p>
-<p>To learn more about managing R pipelines with <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>, you can refer to the package’s <a href="https://books.ropensci.org/targets/" class="external-link">User Guide</a>.</p>
+<p>See the <a href="https://hugomell.github.io/osfHYoungFFCWS/articles/osfHYoungFFCWS.html">Get started</a> as well as the <a href="https://hugomell.github.io/osfHYoungFFCWS/reference/index.html">Reference</a> sections for more information on the functions used in the pipeline, and ways to modify the default values for the simulation parameters and the models’ priors.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

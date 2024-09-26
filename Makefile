@@ -2,7 +2,7 @@ PROJECT_DIR = $(shell echo ${PWD})
 DATE = $(shell date)
 STR_DATE = DUMMY-DATE-- $(DATE)
 
-.PHONY: build build-gitpod clean pkg run  run-gitpod
+.PHONY: build build-gitpod clean pkg run run-gitpod
 
 build:
 	sed -i "s/-ANCHOR-/$(STR_DATE)/" Containerfile
